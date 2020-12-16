@@ -1,0 +1,17 @@
+.Buttons {
+  background: #00ffaa; 
+  background-image: -webkit-linear-gradient(top, #00ffaa, #1bdb21);
+  background-image: -moz-linear-gradient(top, #00ffaa, #1bdb21);
+  background-image: -ms-linear-gradient(top, #00ffaa, #1bdb21);
+  background-image: -o-linear-gradient(top, #00ffaa, #1bdb21);
+  background-image: linear-gradient(to bottom, #00ffaa, #1bdb21);
+  -webkit-border-radius: 42;
+  -moz-border-radius: 42;
+  border-radius: 42px;
+  font-family: Arial;
+  color: rgb(16, 124, 167);
+  font-size: 18px;
+  padding: 10px 20px 10px 20px;
+  border: solid #2cd2de 1px;
+  text-decoration: none;
+}
