@@ -25,7 +25,7 @@ class Generators(commands.Cog):
       await ctx.send(role)
 
   @commands.command(name='passwordgen', help='Generate a random password.')
-  async def gen(self, ctx, length:int=20):
+  async def pgen(self, ctx, length:int=20):
       chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*();,./':<>?\[]}{-=+"
       password=""
       if length > 5:
@@ -35,6 +35,18 @@ class Generators(commands.Cog):
           await ctx.author.send(password)
       else:
           await ctx.send("There must be at least 6 characters.")
+  
+  @commands.command(name='binarygen')
+  async def bgen(self, ctx, length : int):
+    bin = '01'
+    gbin = ''
+    for bgener1 in range(0, length):
+      for bgener2 in range(0,8):
+        cbin = random.choice(bin)
+        gbin = gbin + cbin
+      gbin = gbin + ' '
+    await ctx.send(gbin)
+
 
 def setup(main):
   main.add_cog(Generators(main))

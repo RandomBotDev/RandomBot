@@ -46,12 +46,22 @@ class DevOnly(commands.Cog):
     await ctx.send("Successfully reset the status.")
 
   @commands.command(hidden=True)
-  async def status(self, ctx, presence : discord.Status, *, botstatus):
+  async def status(self, ctx, presence : discord.Status, atype, *, botstatus):
     if ctx.author.id != 716250356803174511:
       return
-    status = discord.Game(name=botstatus)
-    await self.bot.change_presence(status=presence, activity=status)
-    await ctx.send(f"Successfully changed the presence to {presence} with the status {status}.")
+    if atype == "playing" or atype == "Playing":
+      status = discord.Game(name=botstatus)
+      await self.bot.change_presence(status=presence, activity=status)
+    elif atype == "listening" or atype == "Listening":
+      activity = discord.Activity(type=discord.ActivityType.listening, name=botstatus)
+      await self.bot.change_presence(activity=activity)
+    elif atype == "watching" or atype == "Watching":
+      activity = discord.Activity(type=discord.ActivityType.watching, name=botstatus)
+      await self.bot.change_presence(activity=activity)
+    elif atype == "streaming" or atype == "streaming":
+      activity = discord.Streaming(name=botstatus, url="https://twitch.tv/discord")
+      await self.bot.change_presence(activity=activity)
+    await ctx.send(f"Successfully changed the presence to {presence} with the type {atype} and status {botstatus}.")
   
   @commands.command(hidden=True)
   async def starttyping(self, ctx):

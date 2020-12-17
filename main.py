@@ -26,12 +26,11 @@ class MyHelpCommand(commands.MinimalHelpCommand):
 
 bot.help_command = MyHelpCommand(no_category = 'Help')
 
-serveron()
-
 bot.load_extension('cogs.Choosers')
 bot.load_extension('cogs.Events')
 bot.load_extension('cogs.Generators')
 bot.load_extension('cogs.Shufflers')
 bot.load_extension('cogs.Values')
-bot.load_extension('cogs.DevOnly')
+#bot.load_extension('cogs.DevOnly')
+serveron()
 bot.run(bot_token)
