@@ -28,7 +28,7 @@ class Events(commands.Cog):
             color = discord.Color(int(colorhex, 16))
             embed = discord.Embed(color=color, title="Hello, my name is RandomBot!")
             embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/716309071854174268/a7de2db6f154711b022d8045fe2a238c.webp?size=512')
-            embed.add_field(name="The developer", value="GD Tom#3216", inline=False)
+            embed.add_field(name="The developer", value="GD Tom#0001", inline=False)
             embed.add_field(name="Did something go wrong?", value="[Click this to join the support server.](https://randombot.daguacaplushy.repl.co/support)", inline=False)
             embed.add_field(name="Want to invite me to your server?", value="[Click this to invite me!](https://randombot.daguacaplushy.repl.co/invite)", inline=False)
             embed.add_field(name="About Me:", value="I started as a useless app, but then the developer\ndecided to make a bot. I was already in the developer\nportal so the developer took me and made me\na working bot. He already knew Python\nso he coded me. I am what he made.", inline=False)
