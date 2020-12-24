@@ -2,6 +2,9 @@ from discord.ext import commands
 import sys
 import os
 import discord
+import contextlib
+import io
+import time
 
 class DevOnly(commands.Cog):
   def __init__(self, main):
@@ -11,7 +14,8 @@ class DevOnly(commands.Cog):
         os.system('clear')
         await self.bot.logout()
         await self.bot.close()
-        self.bot.loop.stop()
+        sys.exit()
+  
   @commands.command(hidden=True)
   async def shutdown(self, ctx):
         if ctx.author.id != 716250356803174511:
@@ -89,10 +93,50 @@ class DevOnly(commands.Cog):
     os.execv(sys.executable, args + sys.argv[1:])
 
   @commands.command(hidden=True)
-  async def ping(self, ctx):
+  async def ping(self, ctx, times : int):
     if ctx.author.id != 716250356803174511:
       return
-    await ctx.send(f'{self.bot.latency*1000 : .3f} ms')
+    pingmgr = ""
+    if times == 1:
+      pingmgr = await ctx.send(f'Pinging {times} time')
+    else:
+      pingmgr = await ctx.send(f'Pinging {times} times')
+    pings = []
+    time.sleep(1)
+    for pingr in range(1, times+1):
+      t1 = time.time()
+      await pingmgr.edit(content=f"Ping {pingr}")
+      t2 = time.time()
+      ptime = t2 - t1
+      pings.append(ptime)
+      time.sleep(1)
+    aping = sum(pings)
+    aping = aping / times * 1000
+    await pingmgr.edit(content=f'{aping} ms')
+  
+  @commands.command(hidden=True)
+  async def syseval(self, ctx, *, command : str):
+    if ctx.author.id != 716250356803174511:
+      return
+    str_obj = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(str_obj):
+            os.system(command)
+    except Exception as e:
+        return await ctx.send(f"An error occured: {e}")
+    await ctx.send(f'{str_obj.getvalue()}')
+  
+  @commands.command(hidden=True)
+  async def eval(self, ctx, *, command : str):
+    if ctx.author.id != 716250356803174511:
+      return
+    str_obj = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(str_obj):
+            exec(command)
+    except Exception as e:
+        return await ctx.send(f"An error occured: {e}")
+    await ctx.send(f'{str_obj.getvalue()}')
 
 def setup(main):
   main.add_cog(DevOnly(main))

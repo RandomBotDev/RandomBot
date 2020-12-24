@@ -8,7 +8,7 @@ from discord.ext import commands
 load_dotenv()
 bot_token = os.getenv('auth_token')
 
-bot = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('rb.'), case_insensitive=True)
+bot = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('rb.', 'Rb.'), case_insensitive=True)
 
 class MyHelpCommand(commands.MinimalHelpCommand):
     async def send_pages(self):
@@ -31,6 +31,6 @@ bot.load_extension('cogs.Events')
 bot.load_extension('cogs.Generators')
 bot.load_extension('cogs.Shufflers')
 bot.load_extension('cogs.Values')
-#bot.load_extension('cogs.DevOnly')
+bot.load_extension('cogs.DevOnly')
 serveron()
 bot.run(bot_token)
