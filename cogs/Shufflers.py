@@ -5,10 +5,66 @@ class Shufflers(commands.Cog):
   def __init__(self, main):
     self.bot = main
 
-  @commands.command(name='shuffle', help='Shuffle word(s), put sentences in quotation marks.')
+  @commands.command(name='shuffle', help='Shuffle word(s)')
   async def shuffler(self, ctx, *, word: str):
       wordl = list(word)
       random.shuffle(wordl)
+      if ''.join(wordl) == "nigger":
+          await ctx.send("no")
+      elif ''.join(wordl) == "condom":
+          await ctx.send("no")
+      elif ''.join(wordl) == "condoms":
+          await ctx.send("no")
+      elif ''.join(wordl) == "niger":
+          await ctx.send("no")
+      elif ''.join(wordl) == "cum":
+          await ctx.send("no")
+      elif ''.join(wordl) == "sex":
+          await ctx.send("no")
+      elif ''.join(wordl) == "sexy":
+          await ctx.send("no")
+      elif ''.join(wordl) == "anal":
+          await ctx.send("no")
+      elif ''.join(wordl) == "anus":
+          await ctx.send("no")
+      elif ''.join(wordl) == "cock":
+          await ctx.send("no")
+      elif ''.join(wordl) == "balls":
+          await ctx.send("no")
+      elif ''.join(wordl) == "fuck":
+          await ctx.send("no")
+      elif ''.join(wordl) == "shit":
+          await ctx.send("no")
+      elif ''.join(wordl) == "crap":
+          await ctx.send("no")
+      elif ''.join(wordl) == "ass":
+          await ctx.send("no")
+      elif ''.join(wordl) == "asshole":
+          await ctx.send("no")
+      elif ''.join(wordl) == "dick":
+          await ctx.send("no")
+      elif ''.join(wordl) == "bitch":
+          await ctx.send("no")
+      elif ''.join(wordl) == "butt":
+          await ctx.send("no")
+      elif ''.join(wordl) == "penis":
+          await ctx.send("no")
+      elif ''.join(wordl) == "butts":
+          await ctx.send("no")
+      else:
+          await ctx.send(''.join(wordl))
+  @commands.command(name='shufflebyword', help='Shuffle every word')
+  async def shuffleword(self, ctx, *, wordl: str):
+      wordl = wordl.split(" ")
+      newsentence = []
+      for byword in range(len(wordl)):
+        wordl1 = list(wordl[byword])
+        wordl2 = random.sample(wordl1, len(wordl1))
+        newsentence1 = ""
+        for wjoin in wordl2:
+          newsentence1 += wjoin
+        newsentence.append(newsentence1 + ' ')
+      wordl = newsentence
       if ''.join(wordl) == "nigger":
           await ctx.send("no")
       elif ''.join(wordl) == "condom":

@@ -5,7 +5,7 @@ import random
 class Events(commands.Cog):
   def __init__(self, main):
     self.bot = main
-  @commands.Cog.listener()
+  #@commands.Cog.listener()
   async def on_command_error(self, ctx, error):
     await ctx.send(f'An error occured: {str(error)}')
   
