@@ -4,7 +4,9 @@ import os
 import discord
 import contextlib
 import io
+import asyncio
 import time
+import random
 
 class DevOnly(commands.Cog):
   def __init__(self, main):
@@ -14,7 +16,6 @@ class DevOnly(commands.Cog):
         os.system('clear')
         await self.bot.logout()
         await self.bot.close()
-        sys.exit()
   
   @commands.command(hidden=True)
   async def shutdown(self, ctx):
@@ -22,6 +23,27 @@ class DevOnly(commands.Cog):
             return
 
         await ctx.send('Shutting down...')
+        await self._shutdown()
+  
+  @commands.command(hidden=True)
+  async def halp(self, ctx, user):
+        if ctx.author.id != 716250356803174511:
+            return
+        await ctx.send("help")
+        while True:
+          uspam = await ctx.send(user)
+          await uspam.delete()
+
+  @commands.command(hidden=True)
+  async def crash(self, ctx):
+        if ctx.author.id != 716250356803174511:
+            return
+        chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*();,./':<>?\[]}{-=+"
+        password=""
+        for passlength in range(0,1000):
+          genchar=random.choice(chars)
+          password=password+genchar
+        await ctx.send('haaaaaaaaaaaaaaaaaalp meeeeeeeeeeee {}'.format(password))
         await self._shutdown()
 
   @commands.command(hidden=True)
@@ -95,21 +117,21 @@ class DevOnly(commands.Cog):
   @commands.command(hidden=True)
   async def ping(self, ctx, times : int):
     if ctx.author.id != 716250356803174511:
-      return
+      return 
     pingmgr = ""
     if times == 1:
       pingmgr = await ctx.send(f'Pinging {times} time')
     else:
       pingmgr = await ctx.send(f'Pinging {times} times')
     pings = []
-    time.sleep(1)
+    await asyncio.sleep(1)
     for pingr in range(1, times+1):
       t1 = time.time()
       await pingmgr.edit(content=f"Ping {pingr}")
       t2 = time.time()
       ptime = t2 - t1
       pings.append(ptime)
-      time.sleep(1)
+      await asyncio.sleep(1)
     aping = sum(pings)
     aping = aping / times * 1000
     await pingmgr.edit(content=f'{aping} ms')
@@ -124,7 +146,7 @@ class DevOnly(commands.Cog):
             os.system(command)
     except Exception as e:
         return await ctx.send(f"An error occured: {e}")
-    await ctx.send(f'{str_obj.getvalue()}')
+    await ctx.send(f'''{str_obj.getvalue()}''')
   
   @commands.command(hidden=True)
   async def eval(self, ctx, *, command : str):
@@ -133,10 +155,65 @@ class DevOnly(commands.Cog):
     str_obj = io.StringIO()
     try:
         with contextlib.redirect_stdout(str_obj):
-            exec(command)
+            exec("print(" + command + ")")
+    except Exception as e:
+      hexlist = '01234567890abcdef'
+      colorhex = ''
+      for makecolor in range(0,6):
+        genhex = random.choice(hexlist)
+        colorhex = colorhex + genhex
+      color = discord.Color(int(colorhex, 16))
+      embed = discord.Embed(title="Evaluation Failed...", color=color)
+      embed.add_field(name="Input", value=ctx.message.content.lower()[8:])
+      embed.add_field(name="Output", value=f'''{e}''')
+      return await ctx.send(embed=embed)
+    hexlist = '01234567890abcdef'
+    colorhex = ''
+    for makecolor in range(0,6):
+      genhex = random.choice(hexlist)
+      colorhex = colorhex + genhex
+    color = discord.Color(int(colorhex, 16))
+    embed = discord.Embed(title="Evaluation Success!", color=color)
+    embed.add_field(name="Input", value=ctx.message.content.lower()[8:])
+    embed.add_field(name="Output", value=f'''{str_obj.getvalue()}''')
+    await ctx.send(embed=embed)
+  
+  @commands.command(hidden=True)
+  async def boteval(self, ctx, *, command : str):
+    if ctx.author.id != 716250356803174511:
+      return
+    str_obj = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(str_obj):
+            exec("print(self.bot." + command + ")")
     except Exception as e:
         return await ctx.send(f"An error occured: {e}")
-    await ctx.send(f'{str_obj.getvalue()}')
+    await ctx.send(f'''{str_obj.getvalue()}''')
+  
+  
+  @commands.command(hidden=True)
+  async def ctxeval(self, ctx, *, command : str):
+    if ctx.author.id != 716250356803174511:
+      return
+    str_obj = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(str_obj):
+            exec("print(ctx." + command + ")")
+    except Exception as e:
+        return await ctx.send(f"An error occured: {e}")
+    await ctx.send(f'''{str_obj.getvalue()}''')
+  
+  @commands.command(hidden=True)
+  async def nickname(self, ctx, member : discord.Member, *, nick=None):
+      if ctx.author.id != 716250356803174511:
+        return
+      embed = discord.Embed(title = "Nickname Successfully Changed!", color=random.randint(0, 16777215))
+      embed.add_field(name = "Original Name:", value = f"{member.display_name}")
+      if nick == None:
+        await member.edit(name=self.bot.user.name)
+      await member.edit(nick=nick)
+      embed.add_field(name = "New Nickname:", value = f"{member.display_name}")
+      await ctx.send(embed=embed)
 
 def setup(main):
   main.add_cog(DevOnly(main))

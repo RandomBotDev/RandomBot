@@ -41,7 +41,7 @@ class Generators(commands.Cog):
       else:
           await ctx.send("There must be at least 6 characters.")
   
-  @commands.command(name='binarygen')
+  @commands.command(name='binarygen', help='Generate a random binary sequence')
   async def bgen(self, ctx, length : int):
     bin = '01'
     gbin = ''
@@ -52,13 +52,13 @@ class Generators(commands.Cog):
       gbin = gbin + ' '
     await ctx.send(gbin)
   
-  @commands.command(name='eject')
+  @commands.command(name='eject', help='Eject a user.')
   async def ejectuser(self, ctx, *, user : discord.Member="you"):
     if user == "you":
       user = ctx.author
     crew = ["black", "blue", "brown", "cyan", "darkgreen", "lime", "orange", "pink", "purple", "red", "white", "yellow"]
     crewcolor = random.choice(crew)
-    imp = ["true", "false"]
+    imp = ["true", "false", "false", "false", "false"]
     isimpostor = random.choice(imp)
     username = str(user.name)
     urlname = urllib.parse.quote(username)

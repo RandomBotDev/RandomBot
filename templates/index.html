@@ -4,23 +4,38 @@
 <head>
 	<meta charset="utf-8">
 	<title>RandomBot</title>
-	<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-	<link rel="apple-touch-icon-152x152" href="/apple-touch-icon.png"/>
-		<link rel="apple-touch-icon-152x152-precomposed" href="/apple-touch-icon.png"/>
-	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"/>
-  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/buttons.css') }}">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<link rel="apple-touch-icon-152x152" href="/apple-touch-icon.png" />
+	<link rel="apple-touch-icon-152x152-precomposed" href="/apple-touch-icon.png" />
+	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/buttons.css') }}">
 	<meta content="RandomBot" property="og:title">
 	<meta content="The official webpage for the Discord bot RandomBot, a discord bot for random values." property="og:description">
 	<meta content="randombot.tk" property="og:url">
-	<meta content="https://cdn.discordapp.com/app-icons/716309071854174268/a7de2db6f154711b022d8045fe2a238c.png?size=512" property="og:image">
+	<meta content="https://cdn.discordapp.com/avatars/716309071854174268/da597c1ceb8aac700263b371bc3c1fc2.webp?size=512" property="og:image">
 	<meta content="#43B581" data-react-helmet="true" name="theme-color">
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" href="/favicon.ico" />
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" href="/favicon.ico" />
+  <script>
+    function showPermsInput() {
+      var x = document.getElementById("permsInput");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+    
+    function hidePermsInput() {
+      var y = document.getElementById("permsInput");
+      y.style.display = "none";
+    }
+  </script>
 </head>
 
-<body style="background-color:#0000FF;">
+<body style="background-color:#0000FF;" onload="hidePermsInput()">
 	<center>
 		<h1 style="font-family: Arial; font-size: 30px;">Welcome to the official website for RandomBot!</h1>
 	</center>
@@ -29,7 +44,18 @@
 	</center>
 	<center><a class="Buttons" href="/invite" target="_blank">Invite me!</a></center>
 	<hr style="height:5px; visibility:hidden;" />
-	<center><a class="Buttons" href="/support" target="_blank">Support server.</a></center>
+	<center><a class="Buttons" id="Buttons" href="/support" target="_blank">Support server.</a></center>
+	<hr style="height:5px; visibility:hidden;" />
+	<center>
+    <a class="Buttons" id="Buttons" onclick="showPermsInput()" href="#">Choose invite permissions</a>
+    <div id="permsInput">
+      <hr style="height:2.5px; visibility:hidden;" />
+		  <form action="{{ url_for("permsInvite")}}" method="post">
+		  <label for="perms"></label> 
+      <input type="text" id="perms" name="perms" placeholder="Permissions Integer">
+      <button type="submit">Go!</button>
+    </div> 
+  </center>
 	<center>
 		<hr style="height:2.5px; visibility:hidden;" />
 		<p style="font-family: Arial; font-size: 15px;">The developer, GD Tom#0001 decided to make RandomBot for fun. I already
@@ -37,6 +63,9 @@
 		<hr style="height:2.5px; visibility:hidden;" />
 		<p>More about RandomBot: It was a useless app I had in the Developer Portal, and I already knew Python. A while went by and then I just thought it would be a fun idea to make a bot. So I googled how and got to work. I scripted up a couple commands and tested them, they worked. And then I started to get the hang of it, and now I've coded more than 15 commands into it.</p>
 	</center>
+<!-- Start of HubSpot Embed Code -->
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/9110419.js"></script>
+<!-- End of HubSpot Embed Code -->
 </body>
 
 </html>

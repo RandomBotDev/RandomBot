@@ -1,0 +1,43 @@
+if ' '.join(wordlist1) == "nigger":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "condom":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "condoms":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "niger":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "cum":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "sex":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "sexy":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "anal":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "anus":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "cock":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "balls":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "fuck":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "shit":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "crap":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "ass":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "asshole":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "dick":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "bitch":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "butt":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "penis":
+          await ctx.send("no")
+      elif ' '.join(wordlist1) == "butts":
+          await ctx.send("no")
+      else:
