@@ -37,10 +37,14 @@ class Choosers(commands.Cog):
 
   @commands.command(name="giveaway")
   async def gstart(self, ctx, channel:discord.TextChannel, gtime:int, *, reward):
+    if gtime > 86400:
+      return await ctx.send("I can only do giveaways shorter than 1 day.")
+    global greactors
     gtimes = 0
     embed = discord.Embed(title="New giveaway!")
     embed.add_field(name="Prize", value=reward)
     embed.add_field(name="Time", value=f'{gtime} seconds')
+    embed.add_field(name="Host", value=f'{ctx.author.name}#{ctx.author.discriminator}')
     gembed = await channel.send(embed=embed)
     await gembed.add_reaction("🎉")
     nembed = None
@@ -50,30 +54,40 @@ class Choosers(commands.Cog):
       nembed = discord.Embed(title="New giveaway!")
       nembed.add_field(name="Prize", value=reward)
       nembed.add_field(name="Time", value=f'{gtime} seconds')
+      nembed.add_field(name="Host", value=f'{ctx.author.name}#{ctx.author.discriminator}')
       await gembed.edit(embed=nembed)
     chosenuser = random.choice(greactors)
     while True:
-      if chosenuser == "RandomBot#5275":
+      if chosenuser == "RandomBot#5275" or chosenuser == f"{ctx.author.name}#{ctx.author.discriminator}":
         if gtimes == 100:
           wembed = discord.Embed(title=f'Nobody won the {reward} giveaway.')
           await gembed.edit(embed=wembed)
+          greactors = []
           return 
         else:
           gtimes = gtimes + 1
+          chosenuser = random.choice(greactors)
       else:
         wembed = discord.Embed(title=f'{chosenuser} won the {reward} giveaway!')
         await gembed.edit(embed=wembed)
-        return 
+        greactors = []
+        return
 
   @commands.Cog.listener()
   async def on_reaction_add(self, reaction, user):
     if str(reaction.emoji) == "🎉":
       uinfo = f'{user}'
       greactors.append(uinfo)
+  
+  @commands.Cog.listener()
+  async def on_reaction_remove(self, reaction, user):
+    if str(reaction.emoji) == "🎉":
+      uinfo = f'{user}'
+      greactors.remove(uinfo)
 
   @commands.command(name='decide', help="Decide on something")
   async def chooser(self, ctx, *, thing):
-    options = ['Yes', 'For sure', 'Maybe', 'I don\'t know', 'No', 'Definently not', 'Definently']
+    options = ['Yes.', 'For sure!', 'Maybe.', 'I don\'t know.', 'No.', 'Definently not.', 'Definently!']
     choic3 = random.choice(options)
     await ctx.send(choic3)
   

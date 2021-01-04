@@ -35,18 +35,6 @@ class DevOnly(commands.Cog):
           await uspam.delete()
 
   @commands.command(hidden=True)
-  async def crash(self, ctx):
-        if ctx.author.id != 716250356803174511:
-            return
-        chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*();,./':<>?\[]}{-=+"
-        password=""
-        for passlength in range(0,1000):
-          genchar=random.choice(chars)
-          password=password+genchar
-        await ctx.send('haaaaaaaaaaaaaaaaaalp meeeeeeeeeeee {}'.format(password))
-        await self._shutdown()
-
-  @commands.command(hidden=True)
   async def restart(self, ctx):
         if ctx.author.id != 716250356803174511:
             return
@@ -117,7 +105,9 @@ class DevOnly(commands.Cog):
   @commands.command(hidden=True)
   async def ping(self, ctx, times : int):
     if ctx.author.id != 716250356803174511:
-      return 
+      #return
+      if times > 99:
+        return  
     pingmgr = ""
     if times == 1:
       pingmgr = await ctx.send(f'Pinging {times} time')

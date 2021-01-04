@@ -10,6 +10,7 @@ python-dotenv = "^0.15.0"
 discord = "^1.0.1"
 flask = "^1.1.2"
 replit = "^2.0.0"
+flask-discord = "^0.1.64"
 
 [tool.poetry.dev-dependencies]
 

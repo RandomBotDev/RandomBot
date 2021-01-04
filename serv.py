@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory, request, Response
 import os
 from threading import Thread
 from functools import wraps
+import requests
 
 
 def check_auth(username, password):
@@ -47,24 +48,30 @@ def permsInvite():
       permsint = request.form.get("perms")
       permsint = int(permsint)
       return f'<meta http-equiv="refresh" content="0; url = https://discord.com/oauth2/authorize?client_id=716309071854174268&permissions={permsint}&redirect_uri=https%3A%2F%2Frandombot.tk%2Fsuccess&scope=bot&response_type=code" /><p>Redirecting you to the invite page.</p>'
+      return Response(render_template("permsinput.html"),200)
+    elif request.method == "GET":
+      return Response(render_template("404.html"),404)
   except Exception as e:
     if isinstance(e, ValueError):
       return "You need a valid number..."
-  return Response(render_template("404.html"),404)
 
 @app.route('/success')
 def success():
   return f'<meta http-equiv="refresh" content="0; url = https://randombot.tk" />'
 
+@app.route('/redir')
+def redir():
+  url = request.args.get('url')
+  urlr = requests.get(f"{url}")
+  return f'''<meta http-equiv="refresh" content="0; url = {url}" /><div style="visibility:hidden">{urlr.text}</div>'''
+
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/apple-touch-icon.png')
 def appletouchicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'apple-touch-icon.png', mimetype='image/png')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'apple-touch-icon.png', mimetype='image/png')
 
 @app.errorhandler(404)
 def page_not_found(e):

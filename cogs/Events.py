@@ -10,8 +10,7 @@ class Events(commands.Cog):
   async def on_command_error(self, ctx, error):
     if isinstance(error, ZeroDivisionError):
       pass
-    else:
-      await ctx.send(f'An error occured: {str(error)}')
+    await ctx.send(f'An error occured: {str(error)}')
   
   @commands.Cog.listener()
   async def on_ready(self):
@@ -49,8 +48,8 @@ class Events(commands.Cog):
     if message.author.id == self.bot.user.id:
       for badword in file:
         if badword in message.content.lower():
-          await message.delete()
-          await message.channel.send("no")
+          'await message.delete()'
+          'await message.channel.send("no")'
 
 def setup(main):
   main.add_cog(Events(main))
