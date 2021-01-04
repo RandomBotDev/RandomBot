@@ -50,7 +50,13 @@ def permsInvite():
       return f'<meta http-equiv="refresh" content="0; url = https://discord.com/oauth2/authorize?client_id=716309071854174268&permissions={permsint}&redirect_uri=https%3A%2F%2Frandombot.tk%2Fsuccess&scope=bot&response_type=code" /><p>Redirecting you to the invite page.</p>'
       return Response(render_template("permsinput.html"),200)
     elif request.method == "GET":
-      return Response(render_template("404.html"),404)
+      try:
+        perms = request.args.get('perms')
+        perms = int(perms)
+        return f'<meta http-equiv="refresh" content="0; url = https://discord.com/oauth2/authorize?client_id=716309071854174268&permissions={perms}&redirect_uri=https%3A%2F%2Frandombot.tk%2Fsuccess&scope=bot&response_type=code" /><p>Redirecting you to the invite page.</p>'
+        return Response(render_template("permsinput.html"),200)
+      except:
+        return Response('You need a valid permission integer query string. Try https://randombot.tk/pers-invite?perms=(permissions integer)',500)
   except Exception as e:
     if isinstance(e, ValueError):
       return "You need a valid number..."
@@ -58,6 +64,10 @@ def permsInvite():
 @app.route('/success')
 def success():
   return f'<meta http-equiv="refresh" content="0; url = https://randombot.tk" />'
+
+@app.route('/500')
+def fivezerozero():
+  return Response(render_template("errors/500.html"),500)
 
 @app.route('/redir')
 def redir():
@@ -75,7 +85,11 @@ def appletouchicon():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('errors/404.html'), 404
+
+@app.errorhandler(500)
+def app_error(e):
+    return render_template('errors/500.html'), 404
 
 def run():
     app.run(host="0.0.0.0", port=5275)    
