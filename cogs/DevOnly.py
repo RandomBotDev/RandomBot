@@ -19,37 +19,28 @@ class DevOnly(commands.Cog):
   
   @commands.command(hidden=True)
   async def shutdown(self, ctx):
-        if ctx.author.id != 716250356803174511:
-            return
+    if ctx.author.id != 716250356803174511:
+      return
 
-        await ctx.send('Shutting down...')
-        await self._shutdown()
+    await ctx.send('Shutting down...')
+    await self._shutdown()
   
   @commands.command(hidden=True)
-  async def halp(self, ctx, user):
-        if ctx.author.id != 716250356803174511:
-            return
-        await ctx.send("help")
-        while True:
-          uspam = await ctx.send(user)
-          await uspam.delete()
-
-  @commands.command(hidden=True)
   async def restart(self, ctx):
-        if ctx.author.id != 716250356803174511:
-            return
+    if ctx.author.id != 716250356803174511:
+      return
 
-        await ctx.send('Restarting...')
-        await self._shutdown()
-        script = sys.argv[0]
-        if script.startswith(os.getcwd()):
-            script = script[len(os.getcwd()):].lstrip(os.sep)
+    await ctx.send('Restarting...')
+    await self._shutdown()
+    script = sys.argv[0]
+    if script.startswith(os.getcwd()):
+      script = script[len(os.getcwd()):].lstrip(os.sep)
 
-        if script.endswith('__main__.py'):
-            args = [sys.executable, '-m', script[:-len('__main__.py')].rstrip(os.sep).replace(os.sep, '.')]
-        else:
-            args = [sys.executable, script]
-        os.execv(sys.executable, args + sys.argv[1:])
+      if script.endswith('__main__.py'):
+        args = [sys.executable, '-m', script[:-len('__main__.py')].rstrip(os.sep).replace(os.sep, '.')]
+      else:
+        args = [sys.executable, script]
+      os.execv(sys.executable, args + sys.argv[1:])
 
   @commands.command(hidden=True)
   async def resetstatus(self, ctx):

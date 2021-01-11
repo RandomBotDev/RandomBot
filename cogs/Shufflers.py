@@ -10,6 +10,7 @@ class Shufflers(commands.Cog):
       wordl = list(word)
       random.shuffle(wordl)
       await ctx.send(''.join(wordl))
+  
   @commands.command(name='shufflebyword', help='Shuffle every word')
   async def shuffleword(self, ctx, *, wordl: str):
       wordl = wordl.split(" ")

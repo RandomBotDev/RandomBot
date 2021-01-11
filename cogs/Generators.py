@@ -41,7 +41,7 @@ class Generators(commands.Cog):
       else:
           await ctx.send("There must be at least 6 characters.")
   
-  @commands.command(name='binarygen', help='Generate a random binary sequence')
+  @commands.command(name='binarygen', help='Generate a random binary sequence.')
   async def bgen(self, ctx, length : int):
     bin = '01'
     gbin = ''

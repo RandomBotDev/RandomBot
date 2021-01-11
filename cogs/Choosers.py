@@ -10,8 +10,8 @@ class Choosers(commands.Cog):
   @commands.command(name='yesorno', help='Randomly choose yes or no.')
   async def fiftyfifty(self, ctx, yespercent: int=50, nopercent: int=50):
       if nopercent + yespercent == 100:
-          y="Yes "
-          n="No "
+          y="Yes. "
+          n="No. "
           ychance=y*yespercent
           nchance=n*nopercent
           yn=ychance+nchance
@@ -85,7 +85,7 @@ class Choosers(commands.Cog):
       uinfo = f'{user}'
       greactors.remove(uinfo)
 
-  @commands.command(name='decide', help="Decide on something")
+  @commands.command(name='decide', help="Decide on something for you")
   async def chooser(self, ctx, *, thing):
     options = ['Yes.', 'For sure!', 'Maybe.', 'I don\'t know.', 'No.', 'Definently not.', 'Definently!']
     choic3 = random.choice(options)
@@ -94,8 +94,11 @@ class Choosers(commands.Cog):
   @commands.command(name="randomuser")
   async def ruser(self, ctx):
     cuser = random.choice(ctx.guild.members)
-    user = f'{cuser.display_name} ({cuser})'
-    return await ctx.send(user)
+    if cuser.display_name == cuser.name:
+      user = f'{cuser}'
+    else:
+      user = f'{cuser.display_name} ({cuser})'
+    await ctx.send(user)
 
 def setup(main):
   main.add_cog(Choosers(main))

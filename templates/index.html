@@ -2,23 +2,26 @@
 <html lang="en" dir="ltr">
 
 <head>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
 	<title>RandomBot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 	<link rel="apple-touch-icon-152x152" href="/apple-touch-icon.png" />
 	<link rel="apple-touch-icon-152x152-precomposed" href="/apple-touch-icon.png" />
 	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/buttons.css') }}">
+	<!--link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/buttons.css') }}"-->
 	<meta content="RandomBot" property="og:title">
 	<meta content="The official webpage for the Discord bot RandomBot, a discord bot for random values." property="og:description">
 	<meta content="randombot.tk" property="og:url">
 	<meta content="https://cdn.discordapp.com/avatars/716309071854174268/da597c1ceb8aac700263b371bc3c1fc2.webp?size=512" property="og:image">
 	<meta content="#43B581" data-react-helmet="true" name="theme-color">
+  <meta content="The official webpage for the Discord bot RandomBot, a discord bot for random values." name="Description">
 	<link rel="shortcut icon" href="/favicon.ico" />
 	<link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="icon" href="/favicon.ico" />
-  <script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/buttons.css') }}" media="screen">
+  <script async defer>
     function showPermsInput() {
       var x = document.getElementById("permsInput");
       if (x.style.display === "none") {
@@ -33,22 +36,22 @@
       y.style.display = "none";
     }
   </script>
-  <?php include 'login.php';?>
+  <noscript>Some content might not work because your broser does not support JavaScript.</noscript>
 </head>
 
 <body style="background-color:#0000FF;" onload="hidePermsInput()">
 	<center>
-		<h1 style="font-family: Arial; font-size: 30px;">Welcome to the official website for RandomBot!</h1>
+		<h1 style="font-family: Arial; font-size: 30px; color: rgb(227, 187, 27)">Welcome to the official website for RandomBot!</h1>
 	</center>
 	<center>
-		<h2 style="font-family: Arial; font-size: 20px;">RandomBot is a Discord bot for random values.</h2>
+		<h2 style="font-family: Arial; font-size: 20px; color: rgb(227, 187, 27)">RandomBot is a Discord bot for random values.</h2>
 	</center>
 	<center><a class="Buttons" href="/invite" target="_blank">Invite me!</a></center>
 	<hr style="height:5px; visibility:hidden;" />
-	<center><a class="Buttons" id="Buttons" href="/support" target="_blank">Support server.</a></center>
+	<center><a class="Buttons" href="/support" target="_blank">Support server.</a></center>
 	<hr style="height:5px; visibility:hidden;" />
 	<center>
-    <a class="Buttons" id="Buttons" onclick="showPermsInput()" href="#">Choose invite permissions</a>
+    <a class="Buttons" onclick="showPermsInput()" href="#">Choose invite permissions</a>
     <div id="permsInput">
       <hr style="height:2.5px; visibility:hidden;" />
 		  <form action="{{ url_for("permsInvite")}}" method="post">
@@ -59,14 +62,11 @@
   </center>
 	<center>
 		<hr style="height:2.5px; visibility:hidden;" />
-		<p style="font-family: Arial; font-size: 15px;">The developer, GD Tom#0001 decided to make RandomBot for fun. I already
+		<p style="font-family: Arial; font-size: 15px; color: rgb(192, 219, 18);">The developer, GD Tom#6134 decided to make RandomBot for fun. I already
 			knew Python, so I googled how to make a bot. Now we are here, with it in more than 40 servers.</p>
 		<hr style="height:2.5px; visibility:hidden;" />
-		<p>More about RandomBot: It was a useless app I had in the Developer Portal, and I already knew Python. A while went by and then I just thought it would be a fun idea to make a bot. So I googled how and got to work. I scripted up a couple commands and tested them, they worked. And then I started to get the hang of it, and now I've coded more than 15 commands into it.</p>
+		<p style="color: rgb(192, 219, 18);">More about RandomBot: It was a useless app I had in the Developer Portal, and I already knew Python. A while went by and then I just thought it would be a fun idea to make a bot. So I googled how and got to work. I scripted up a couple commands and tested them, they worked. And then I started to get the hang of it, and now I've coded more than 15 commands into it.</p>
 	</center>
-<!-- Start of HubSpot Embed Code -->
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/9110419.js"></script>
-<!-- End of HubSpot Embed Code -->
 </body>
-<footer><center><p>We are not owned or affiliated by Discord.</p></center></footer>
+<footer><center><p style="color: rgb(192, 219, 18);">We are not owned or affiliated by Discord.</p></center></footer>
 </html>

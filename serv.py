@@ -1,33 +1,14 @@
 from flask import Flask, render_template, send_from_directory, request, Response
 import os
 from threading import Thread
-from functools import wraps
 import requests
-
-
-def check_auth(username, password):
-    """This function is called to check if a username /
-    password combination is valid.
-    """
-    return username == 'RBAdmin' and password == 'RBDev7'
-
-def authenticate():
-    """Sends a 401 response that enables basic auth"""
-    return Response(
-    'Could not verify your access level for that URL.\n'
-    'You have to login with proper credentials', 401,
-    {'WWW-Authenticate': 'Basic realm="Login Required"'})
-
-def requires_auth(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        auth = request.authorization
-        if not auth or not check_auth(auth.username, auth.password):
-            return authenticate()
-        return f(*args, **kwargs)
-    return decorated
-
 app = Flask('RandomBot')
+
+@app.after_request
+def apply_caching(response):
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Content-Security-Policy"] = "base-uri 'self'"
+    return response
 
 @app.route('/')
 def main():
@@ -65,6 +46,11 @@ def permsInvite():
 def success():
   return f'<meta http-equiv="refresh" content="0; url = https://randombot.tk" />'
 
+@app.route('/raid-notify')
+def raidnotify():
+  return render_template("rickroll.html")
+
+
 @app.route('/500')
 def fivezerozero():
   return Response(render_template("errors/500.html"),500)
@@ -79,6 +65,10 @@ def redir():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'robots.txt', mimetype='text/plain')
+
 @app.route('/apple-touch-icon.png')
 def appletouchicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'apple-touch-icon.png', mimetype='image/png')
@@ -89,7 +79,7 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def app_error(e):
-    return render_template('errors/500.html'), 404
+    return render_template('errors/500.html'), 500
 
 def run():
     app.run(host="0.0.0.0", port=5275)    

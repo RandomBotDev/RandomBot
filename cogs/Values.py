@@ -17,7 +17,7 @@ class Values(commands.Cog):
 
   @commands.command(name='cooltest', help='How cool are you?')
   async def test(self, ctx):
-    await ctx.send(f'{ctx.author.mention} You are %s percent cool.' % (random.randint(0,100)))
+    await ctx.send(f'{ctx.author.mention}, You are {random.randint(0,100)} percent cool.')
   
   @commands.command(name='risktest', help='How risky is something?')
   async def tester(self, ctx, *, idea):
@@ -27,7 +27,7 @@ class Values(commands.Cog):
   @commands.command(name='smarttest', help='How smart are you?')
   async def stester(self, ctx):
     smart = random.randint(0,100)
-    await ctx.send(f'You are {smart}% smart')
+    await ctx.send(f'{ctx.author.mention}, You are {smart}% smart')
 
   @commands.command(name='rate', help='How good is something?')
   async def rs(self, ctx, *, thing):
