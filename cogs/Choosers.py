@@ -85,6 +85,18 @@ class Choosers(commands.Cog):
       uinfo = f'{user}'
       greactors.remove(uinfo)
 
+  @commands.command(name="choose", help="Seperate choices with \" + \"")
+  async def c(self,ctx, *, options):
+    osplit = options.split(" + ")
+    ping = False
+    for option in osplit:
+      if option.startswith("<@"):
+        ping = True
+    if ping:
+      return await ctx.send("I can't ping.")
+    choice = random.choice(osplit)
+    await ctx.send(f"I choose ***{choice}***.")
+
   @commands.command(name='decide', help="Decide on something for you")
   async def chooser(self, ctx, *, thing):
     options = ['Yes.', 'For sure!', 'Maybe.', 'I don\'t know.', 'No.', 'Definently not.', 'Definently!']

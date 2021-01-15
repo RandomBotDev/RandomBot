@@ -7,6 +7,7 @@ import io
 import asyncio
 import time
 import random
+import ast
 
 class DevOnly(commands.Cog):
   def __init__(self, main):
@@ -17,10 +18,59 @@ class DevOnly(commands.Cog):
         await self.bot.logout()
         await self.bot.close()
   
+  def insert_returns(self, body):
+    # insert return stmt if the last expression is a expression statement
+    if isinstance(body[-1], ast.Expr):
+        body[-1] = ast.Return(body[-1].value)
+        ast.fix_missing_locations(body[-1])
+
+    # for if statements, we insert returns into the body and the orelse
+    if isinstance(body[-1], ast.If):
+        self.insert_returns(body[-1].body)
+        self.insert_returns(body[-1].orelse)
+
+    # for with blocks, again we insert returns into the body
+    if isinstance(body[-1], ast.With):
+        self.insert_returns(body[-1].body)
+  
+  @commands.command()
+  async def eval2(self, ctx, *, cmd):
+    if ctx.author.id != 716250356803174511:
+      return await ctx.send('An error occured: Command "eval2" is not found')
+    fn_name = "_eval_expr"
+
+    cmd = cmd.strip("` ")
+
+    # add a layer of indentation
+    cmd = "\n".join(f"    {i}" for i in cmd.splitlines())
+
+    # wrap in async def body
+    body = f"async def {fn_name}():\n{cmd}"
+
+    parsed = ast.parse(body)
+    body = parsed.body[0].body
+
+    self.insert_returns(body)
+
+    env = {
+        'bot': self.bot,
+        'discord': discord,
+        'commands': commands,
+        'ctx': ctx,
+        '__import__': __import__
+    }
+    exec(compile(parsed, filename="<ast>", mode="exec"), env)
+
+    result = (await eval(f"{fn_name}()", env))
+    if type(result) == discord.Message:
+      pass
+    else:
+      await ctx.send(result)
+  
   @commands.command(hidden=True)
   async def shutdown(self, ctx):
     if ctx.author.id != 716250356803174511:
-      return
+      return await ctx.send('An error occured: Command "shutdown" is not found')
 
     await ctx.send('Shutting down...')
     await self._shutdown()
@@ -28,7 +78,7 @@ class DevOnly(commands.Cog):
   @commands.command(hidden=True)
   async def restart(self, ctx):
     if ctx.author.id != 716250356803174511:
-      return
+      return await ctx.send('An error occured: Command "restart" is not found')
 
     await ctx.send('Restarting...')
     await self._shutdown()
@@ -45,7 +95,7 @@ class DevOnly(commands.Cog):
   @commands.command(hidden=True)
   async def resetstatus(self, ctx):
     if ctx.author.id != 716250356803174511:
-      return
+      return await ctx.send('An error occured: Command "resetstatus" is not found')
     activity = discord.Game(name="rb.help | Invite the bot: https://bit.ly/InviteRandomBot")
     await self.bot.change_presence(status=discord.Status.online, activity=activity)
     await ctx.send("Successfully reset the status.")
@@ -53,7 +103,7 @@ class DevOnly(commands.Cog):
   @commands.command(hidden=True)
   async def status(self, ctx, presence : discord.Status, atype, *, botstatus):
     if ctx.author.id != 716250356803174511:
-      return
+      return await ctx.send('An error occured: Command "status" is not found')
     if atype == "playing" or atype == "Playing":
       status = discord.Game(name=botstatus)
       await self.bot.change_presence(status=presence, activity=status)
@@ -71,7 +121,7 @@ class DevOnly(commands.Cog):
   @commands.command(hidden=True)
   async def starttyping(self, ctx):
     if ctx.author.id != 716250356803174511:
-      return
+      return await ctx.send('An error occured: Command "starttyping" is not found')
     await ctx.send("Typing...")
     while True:
       async with ctx.typing():
@@ -80,7 +130,7 @@ class DevOnly(commands.Cog):
   @commands.command(hidden=True)
   async def stoptyping(self, ctx):
     if ctx.author.id != 716250356803174511:
-      return
+      return await ctx.send('An error occured: Command "stoptyping" is not found')
     await ctx.send('Stopped typing.')
     await self._shutdown()
     script = sys.argv[0]
@@ -96,9 +146,9 @@ class DevOnly(commands.Cog):
   @commands.command(hidden=True)
   async def ping(self, ctx, times : int):
     if ctx.author.id != 716250356803174511:
-      #return
+      #return await ctx.send('An error occured: Command "ping" is not found')
       if times > 99:
-        return  
+        return await ctx.send('An error occured: Command "ping" is not found')
     pingmgr = ""
     if times == 1:
       pingmgr = await ctx.send(f'Pinging {times} time')
@@ -118,21 +168,9 @@ class DevOnly(commands.Cog):
     await pingmgr.edit(content=f'{aping} ms')
   
   @commands.command(hidden=True)
-  async def syseval(self, ctx, *, command : str):
-    if ctx.author.id != 716250356803174511:
-      return
-    str_obj = io.StringIO()
-    try:
-        with contextlib.redirect_stdout(str_obj):
-            os.system(command)
-    except Exception as e:
-        return await ctx.send(f"An error occured: {e}")
-    await ctx.send(f'''{str_obj.getvalue()}''')
-  
-  @commands.command(hidden=True)
   async def eval(self, ctx, *, command : str):
     if ctx.author.id != 716250356803174511:
-      return
+      return await ctx.send('An error occured: Command "eval" is not found')
     str_obj = io.StringIO()
     try:
         with contextlib.redirect_stdout(str_obj):
@@ -155,39 +193,14 @@ class DevOnly(commands.Cog):
       colorhex = colorhex + genhex
     color = discord.Color(int(colorhex, 16))
     embed = discord.Embed(title="Evaluation Success!", color=color)
-    embed.add_field(name="Input", value=ctx.message.content.lower()[8:])
+    embed.add_field(name="Input", value=command)
     embed.add_field(name="Output", value=f'''{str_obj.getvalue()}''')
     await ctx.send(embed=embed)
   
   @commands.command(hidden=True)
-  async def boteval(self, ctx, *, command : str):
-    if ctx.author.id != 716250356803174511:
-      return
-    str_obj = io.StringIO()
-    try:
-        with contextlib.redirect_stdout(str_obj):
-            exec("print(self.bot." + command + ")")
-    except Exception as e:
-        return await ctx.send(f"An error occured: {e}")
-    await ctx.send(f'''{str_obj.getvalue()}''')
-  
-  
-  @commands.command(hidden=True)
-  async def ctxeval(self, ctx, *, command : str):
-    if ctx.author.id != 716250356803174511:
-      return
-    str_obj = io.StringIO()
-    try:
-        with contextlib.redirect_stdout(str_obj):
-            exec("print(ctx." + command + ")")
-    except Exception as e:
-        return await ctx.send(f"An error occured: {e}")
-    await ctx.send(f'''{str_obj.getvalue()}''')
-  
-  @commands.command(hidden=True)
   async def nickname(self, ctx, member : discord.Member, *, nick=None):
       if ctx.author.id != 716250356803174511:
-        return
+        return await ctx.send('An error occured: Command "nickname" is not found')
       embed = discord.Embed(title = "Nickname Successfully Changed!", color=random.randint(0, 16777215))
       embed.add_field(name = "Original Name:", value = f"{member.display_name}")
       if nick == None:

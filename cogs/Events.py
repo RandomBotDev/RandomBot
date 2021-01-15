@@ -14,7 +14,7 @@ class Events(commands.Cog):
   async def on_ready(self):
     activity = discord.Game(name="rb.help | Invite the bot: https://randombot.tk/invite")
     await self.bot.change_presence(status=discord.Status.online, activity=activity)
-    print(f'{self.bot.user.name}#{self.bot.user.discriminator} is ready to go!')
+    print(f'{self.bot.user} is ready to go!')
 
   @commands.Cog.listener() 
   async def on_message(self, message):

@@ -8,11 +8,16 @@ app = Flask('RandomBot')
 def apply_caching(response):
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Content-Security-Policy"] = "base-uri 'self'"
+    response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains; preload"
     return response
 
 @app.route('/')
 def main():
     return render_template("index.html")
+
+@app.route('/logs')
+def logs():
+    return render_template("logs.html")
 
 @app.route('/invite')
 def invite():
@@ -50,7 +55,6 @@ def success():
 def raidnotify():
   return render_template("rickroll.html")
 
-
 @app.route('/500')
 def fivezerozero():
   return Response(render_template("errors/500.html"),500)
@@ -64,6 +68,10 @@ def redir():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+'''@app.route('/mirawobble.gif')
+def mirawobble():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'mirawobble.gif', mimetype='image/gif')'''
 
 @app.route('/robots.txt')
 def robots():
