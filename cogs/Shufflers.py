@@ -11,7 +11,7 @@ class Shufflers(commands.Cog):
       random.shuffle(wordl)
       await ctx.send(''.join(wordl))
   
-  @commands.command(name='shufflebyword', help='Shuffle every word')
+  @commands.command(name='shufflebyword', help='Shuffle every word in a sentence.')
   async def shuffleword(self, ctx, *, wordl: str):
       wordl = wordl.split(" ")
       newsentence = []

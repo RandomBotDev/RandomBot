@@ -22,30 +22,27 @@ class Values(commands.Cog):
   @commands.command(name='risktest', help='How risky is something?')
   async def tester(self, ctx, *, idea):
     risk = random.randint(0,100)
-    await ctx.send(f'{idea} is {risk}% risky')
+    await ctx.send(f'***{idea}*** is {risk}% risky')
   
   @commands.command(name='smarttest', help='How smart are you?')
   async def stester(self, ctx):
     smart = random.randint(0,100)
     await ctx.send(f'{ctx.author.mention}, You are {smart}% smart')
 
-  @commands.command(name='rate', help='How good is something?')
+  @commands.command(name='rate', help='Rate a thing.')
   async def rs(self, ctx, *, thing):
     v1 = random.randint(0,5)
     v2 = random.randint(0,9)
     if v1 == 5 and v2 > 0:
-      await ctx.send(f'I rate {thing} 5 out of 5 stars')
-      return
-    if v1 == 5 and v2 == 0:
-      await ctx.send(f'I rate {thing} 5 out of 5 stars')
-      return
-    if v1 == 0 and v2 == 0:
-      await ctx.send(f'I rate {thing} 0 out of 5 stars')
-      return
+      await ctx.send(f'I rate ***{thing}*** 5 out of 5 stars.')
+    elif v1 == 5 and v2 == 0:
+      await ctx.send(f'I rate ***{thing}*** 5 out of 5 stars.')
+    elif v1 == 0 and v2 == 0:
+      await ctx.send(f'I rate ***{thing}*** 0 out of 5 stars.')
     else:
-      await ctx.send(f'I rate {thing} {v1}.{v2} out of 5 stars')
+      await ctx.send(f'I rate ***{thing}*** {v1}.{v2} out of 5 stars.')
   
-  @commands.command(name='dice', help='Rolls dice for you.')
+  @commands.command(name='dice', help='Roll dice.')
   async def roll(self, ctx, numberofdice: int, numberofsides: int):
       vdice = [
           str(random.choice(range(1, numberofsides + 1)))

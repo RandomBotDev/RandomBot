@@ -8,6 +8,9 @@ import asyncio
 import time
 import random
 import ast
+import psutil
+from googletrans import Translator
+
 
 class DevOnly(commands.Cog):
   def __init__(self, main):
@@ -33,7 +36,7 @@ class DevOnly(commands.Cog):
     if isinstance(body[-1], ast.With):
         self.insert_returns(body[-1].body)
   
-  @commands.command()
+  @commands.command(hidden=True)
   async def eval2(self, ctx, *, cmd):
     if ctx.author.id != 716250356803174511:
       return await ctx.send('An error occured: Command "eval2" is not found')
@@ -66,6 +69,12 @@ class DevOnly(commands.Cog):
       pass
     else:
       await ctx.send(result)
+
+  @commands.command(name="memusage", hidden=True)
+  async def getmem(self, ctx):
+    if ctx.author.id != 716250356803174511:
+      return await ctx.send('An error occured: Command "memusage" is not found')
+    await ctx.send(str(psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2) + " MB")
   
   @commands.command(hidden=True)
   async def shutdown(self, ctx):
@@ -74,6 +83,14 @@ class DevOnly(commands.Cog):
 
     await ctx.send('Shutting down...')
     await self._shutdown()
+
+  @commands.command(hidden=True)
+  async def translate(self, ctx, *, message : str):
+    if ctx.author.id != 716250356803174511:
+      return await ctx.send('An error occured: Command "translate" is not found')
+    translator = Translator()
+    translated = translator.translate(message)
+    await ctx.send(f"Output: {translated.text}")
   
   @commands.command(hidden=True)
   async def restart(self, ctx):
@@ -126,6 +143,18 @@ class DevOnly(commands.Cog):
     while True:
       async with ctx.typing():
         pass
+  
+  @commands.command(hidden=True)
+  async def delm(self, ctx, limit : int):
+    if ctx.author.id != 716250356803174511:
+      return await ctx.send('An error occured: Command "delm" is not found')
+    messages = await ctx.channel.history(limit=limit).flatten()
+    mlen = 0
+    for message in messages:
+      if message.author == self.bot.user:
+        await message.delete()
+        mlen = mlen + 1
+    await ctx.author.send(f"Deleted {mlen} of my messages.")
 
   @commands.command(hidden=True)
   async def stoptyping(self, ctx):

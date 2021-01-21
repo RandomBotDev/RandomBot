@@ -28,7 +28,7 @@ class Events(commands.Cog):
               colorhex = colorhex + genhex
             color = discord.Color(int(colorhex, 16))
             embed = discord.Embed(color=color, title="Hello, my name is RandomBot!")
-            embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/716309071854174268/a7de2db6f154711b022d8045fe2a238c.webp?size=512')
+            embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/716309071854174268/da597c1ceb8aac700263b371bc3c1fc2.webp?size=1024')
             embed.add_field(name="The developer", value="GD Tom#6134", inline=False)
             embed.add_field(name="Did something go wrong?", value="[Click this to join the support server.](https://randombot.tk/support)", inline=False)
             embed.add_field(name="Want to invite me to your server?", value="[Click this to invite me!](https://randombot.tk/invite)", inline=False)

@@ -35,7 +35,7 @@ class Choosers(commands.Cog):
   global greactors
   greactors = []
 
-  @commands.command(name="giveaway")
+  @commands.command(name="giveaway", description="Start a giveaway.")
   async def gstart(self, ctx, channel:discord.TextChannel, gtime:int, *, reward):
     if gtime > 86400:
       return await ctx.send("I can only do giveaways shorter than 1 day.")
@@ -90,7 +90,7 @@ class Choosers(commands.Cog):
     osplit = options.split(" + ")
     ping = False
     for option in osplit:
-      if option.startswith("<@"):
+      if option.startswith("<@") or option.startswith("@here") or option.startswith("@everyone"):
         ping = True
     if ping:
       return await ctx.send("I can't ping.")
@@ -102,15 +102,6 @@ class Choosers(commands.Cog):
     options = ['Yes.', 'For sure!', 'Maybe.', 'I don\'t know.', 'No.', 'Definently not.', 'Definently!']
     choic3 = random.choice(options)
     await ctx.send(choic3)
-  
-  @commands.command(name="randomuser")
-  async def ruser(self, ctx):
-    cuser = random.choice(ctx.guild.members)
-    if cuser.display_name == cuser.name:
-      user = f'{cuser}'
-    else:
-      user = f'{cuser.display_name} ({cuser})'
-    await ctx.send(user)
 
 def setup(main):
   main.add_cog(Choosers(main))

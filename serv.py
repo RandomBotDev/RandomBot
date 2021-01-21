@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory, request, Response
 import os
 from threading import Thread
 import requests
+
 app = Flask('RandomBot')
 
 @app.after_request
@@ -69,9 +70,9 @@ def redir():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-'''@app.route('/mirawobble.gif')
+@app.route('/mirawobble.gif')
 def mirawobble():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'mirawobble.gif', mimetype='image/gif')'''
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'mirawobble.gif', mimetype='image/gif')
 
 @app.route('/robots.txt')
 def robots():
@@ -80,6 +81,22 @@ def robots():
 @app.route('/apple-touch-icon.png')
 def appletouchicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'apple-touch-icon.png', mimetype='image/png')
+
+@app.route('/arc-sw.js')
+def arcSwJs():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'arc-sw.js', mimetype='text/javascript')
+  
+@app.route('/arc-widget')
+def arcWidget():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'arc-widget.js', mimetype='text/javascript')
+
+@app.route('/arc-sw')
+def arcSW():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'arc-sw.js', mimetype='text/javascript')
+  
+@app.route('/arc-widget.js')
+def arcWidgetJs():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'arc-widget.js', mimetype='text/javascript')
 
 @app.errorhandler(404)
 def page_not_found(e):
