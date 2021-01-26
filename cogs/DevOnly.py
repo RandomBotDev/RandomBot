@@ -47,6 +47,10 @@ class DevOnly(commands.Cog):
     # add a layer of indentation
     cmd = "\n".join(f"    {i}" for i in cmd.splitlines())
 
+    if "ban" in cmd.lower() or "kick" in cmd.lower() or "messages:" in cmd.lower() or "add_role" in cmd.lower() or "rm" in cmd.lower() or "create_" in cmd.lower():
+      await ctx.send("I can't do that.")
+      return
+
     # wrap in async def body
     body = f"async def {fn_name}():\n{cmd}"
 
@@ -200,6 +204,9 @@ class DevOnly(commands.Cog):
   async def eval(self, ctx, *, command : str):
     if ctx.author.id != 716250356803174511:
       return await ctx.send('An error occured: Command "eval" is not found')
+    if "ban" in command.lower() or "kick" in command.lower() or "messages:" in command.lower() or "add_role" in command.lower() or "rm" in command.lower() or "create_" in command.lower():
+      await ctx.send("I can't do that.")
+      return
     str_obj = io.StringIO()
     try:
         with contextlib.redirect_stdout(str_obj):
@@ -212,7 +219,7 @@ class DevOnly(commands.Cog):
         colorhex = colorhex + genhex
       color = discord.Color(int(colorhex, 16))
       embed = discord.Embed(title="Evaluation Failed...", color=color)
-      embed.add_field(name="Input", value=ctx.message.content.lower()[8:])
+      embed.add_field(name="Input", value=command)
       embed.add_field(name="Output", value=f'''{e}''')
       return await ctx.send(embed=embed)
     hexlist = '01234567890abcdef'

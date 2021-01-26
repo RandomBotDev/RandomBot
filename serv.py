@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory, request, Response
 import os
 from threading import Thread
 import requests
+from base64 import b64decode as b64d
 
 app = Flask('RandomBot')
 
@@ -15,10 +16,6 @@ def apply_caching(response):
 @app.route('/')
 def main():
     return render_template("index.html")
-
-@app.route('/logs')
-def logs():
-    return render_template("logs.html")
 
 @app.route('/invite')
 def invite():
@@ -46,7 +43,7 @@ def permsInvite():
         return Response('You need a valid permission integer query string. Try https://randombot.tk/pers-invite?perms=(permissions integer)',500)
   except Exception as e:
     if isinstance(e, ValueError):
-      return "You need a valid number..."
+      return Response("You need a valid number...", 400)
 
 @app.route('/success')
 def success():
@@ -62,9 +59,16 @@ def fivezerozero():
 
 @app.route('/redir')
 def redir():
-  url = request.args.get('url')
-  urlr = requests.get(f"{url}")
-  return f'''<meta http-equiv="refresh" content="0; url = {url}" /><div style="visibility:hidden">{urlr.text}</div>'''
+  if request.args.get('base64'):
+    url = b64d(request.args.get('url')).decode()
+  else:
+    url = request.args.get('url')
+  try:
+    urlr = requests.get(f"{url}").text
+  except Exception as e:
+    if str(e).startswith("Invalid URL"):
+      urlr = "<center><p>Thats not a URL!</p></center>"
+  return f'''<meta http-equiv="refresh" content="0; url = {url}" /><div style="visibility:hidden">{urlr}</div>'''
 
 @app.route('/favicon.ico')
 def favicon():
@@ -81,6 +85,10 @@ def robots():
 @app.route('/apple-touch-icon.png')
 def appletouchicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'apple-touch-icon.png', mimetype='image/png')
+
+@app.route('/pecala.png')
+def pecala():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'pecala.png', mimetype='image/png')
 
 @app.route('/arc-sw.js')
 def arcSwJs():

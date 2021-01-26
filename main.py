@@ -11,6 +11,8 @@ bot_token = os.getenv('auth_token')
 
 bot = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('rb.', 'Rb.', 'RB.', 'rB.'), description='A bot for random value and random value related things.', case_insensitive=True, intents=discord.Intents.all())
 
+bot.remove_command("help")
+
 class Help(commands.MinimalHelpCommand):
     async def send_pages(self):
         hexlist = '01234567890abcdef'

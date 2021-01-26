@@ -45,9 +45,10 @@ class Events(commands.Cog):
 
     if message.author.id == self.bot.user.id:
       for badword in file:
-        if badword in message.content.lower():
-          await message.delete()
-          await message.channel.send("no")
+        for word in message.content.lower().split(" "):
+          if word == badword:
+            await message.delete()
+            await message.channel.send("no")
 
 def setup(main):
   main.add_cog(Events(main))

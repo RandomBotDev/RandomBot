@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>RandomBot</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 	<link rel="apple-touch-icon-152x152" href="/apple-touch-icon.png" />
 	<link rel="apple-touch-icon-152x152-precomposed" href="/apple-touch-icon.png" />
@@ -15,14 +15,14 @@
 	<meta content="randombot.tk" property="og:url">
 	<meta content="https://cdn.discordapp.com/avatars/716309071854174268/da597c1ceb8aac700263b371bc3c1fc2.webp?size=1024" property="og:image">
 	<meta content="#43B581" data-react-helmet="true" name="theme-color">
-  <meta content="The official webpage for the Discord bot RandomBot, a discord bot for random values." name="Description">
+	<meta content="The official webpage for the Discord bot RandomBot, a discord bot for random values." name="Description">
 	<link rel="shortcut icon" href="/favicon.ico" />
 	<link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="icon" href="/favicon.ico" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/buttons.css') }}" media="screen">
-  <script async defer>
-    function showPermsInput() {
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/buttons.css') }}" media="screen">
+	<script async defer>
+		function showPermsInput() {
       var x = document.getElementById("permsInput");
       if (x.style.display === "none") {
         x.style.display = "block";
@@ -35,9 +35,11 @@
       var y = document.getElementById("permsInput");
       y.style.display = "none";
     }
-  </script>
-  <script async src="https://arc.io/widget.min.js#P5EJZfbj"></script>
-  <noscript>Some content might not work because your broser does not support JavaScript.</noscript>
+	</script>
+	<script async src="https://arc.io/widget.min.js#P5EJZfbj">
+
+	</script>
+	<noscript>Some content might not work because your broser does not support JavaScript.</noscript>
 </head>
 
 <body style="background-color:#0000FF;" onload="hidePermsInput()">
@@ -52,11 +54,11 @@
 	<center><a class="Buttons" href="/support" target="_blank">Support server.</a></center>
 	<hr style="height:5px; visibility:hidden;" />
 	<center>
-    <a class="Buttons" onclick="showPermsInput()" href="#">Choose invite permissions</a>
-    <div id="permsInput">
-      <hr style="height:2.5px; visibility:hidden;" />
-		  <form action="{{ url_for("permsInvite")}}" method="post">
-		  <label for="perms"></label> 
+		<a class="Buttons" onclick="showPermsInput()" href="#">Choose invite permissions</a>
+		<div id="permsInput">
+			<hr style="height:2.5px; visibility:hidden;" />
+			<form action="{{ url_for("permsInvite")}}" method="post">
+				<label for="perms"></label> 
       <input type="text" id="perms" name="perms" placeholder="Permissions Integer">
       <button type="submit">Go!</button>
     </div> 
