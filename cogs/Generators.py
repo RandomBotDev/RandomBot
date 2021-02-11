@@ -27,6 +27,8 @@ class Generators(commands.Cog):
 
   @commands.command(name='passwordgen', help='Generate a random password.')
   async def pgen(self, ctx, length:int=20):
+      if length > 1975:
+        return await ctx.send("I can only generate passwords shorter than 1975 characters.")
       chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*();,./':<>?\[]}{-=+"
       password=""
       if length > 5:
@@ -36,7 +38,7 @@ class Generators(commands.Cog):
           if ctx.guild == None:
             await ctx.send(password)
           else:
-            await ctx.author.send(password)
+            await ctx.author.send(f'Generated password: `${password}`')
             await ctx.send('Check your DM\'s.')
       else:
           await ctx.send("There must be at least 6 characters.")

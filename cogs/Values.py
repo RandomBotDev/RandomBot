@@ -7,6 +7,9 @@ class Values(commands.Cog):
   
   @commands.command(name='randomnumber', help='Generates a random number.')
   async def randomnumberexec(self, ctx, nmbr: int=1000000):
+    if (nmbr > 1000000000000):
+      await ctx.send("I can only generate numbers shorter than 1000000000000 characters.")
+      return
     response = random.randint(0,nmbr)
     await ctx.send(response)
 

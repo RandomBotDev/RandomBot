@@ -47,7 +47,7 @@ class DevOnly(commands.Cog):
     # add a layer of indentation
     cmd = "\n".join(f"    {i}" for i in cmd.splitlines())
 
-    if "ban" in cmd.lower() or "kick" in cmd.lower() or "messages:" in cmd.lower() or "add_role" in cmd.lower() or "rm" in cmd.lower() or "create_" in cmd.lower():
+    if "ban" in cmd.lower() or "kick" in cmd.lower() or "messages:" in cmd.lower() or "add_role" in cmd.lower() or "create_" in cmd.lower():
       await ctx.send("I can't do that.")
       return
 
@@ -64,7 +64,8 @@ class DevOnly(commands.Cog):
         'discord': discord,
         'commands': commands,
         'ctx': ctx,
-        '__import__': __import__
+        '__import__': __import__,
+        'asyncio': asyncio
     }
     exec(compile(parsed, filename="<ast>", mode="exec"), env)
 
@@ -72,7 +73,13 @@ class DevOnly(commands.Cog):
     if type(result) == discord.Message:
       pass
     else:
-      await ctx.send(result)
+      try:
+        await ctx.send(result)
+      except Exception as e:
+        if str(e) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50006): Cannot send an empty message" or str(e) == "400 Bad Request (error code: 50006): Cannot send an empty message":
+          return
+        else:
+          await ctx.send(f"An error occured: {e}")
 
   @commands.command(name="memusage", hidden=True)
   async def getmem(self, ctx):
@@ -125,6 +132,8 @@ class DevOnly(commands.Cog):
   async def status(self, ctx, presence : discord.Status, atype, *, botstatus):
     if ctx.author.id != 716250356803174511:
       return await ctx.send('An error occured: Command "status" is not found')
+    if botstatus == "None":
+      botstatus = None
     if atype == "playing" or atype == "Playing":
       status = discord.Game(name=botstatus)
       await self.bot.change_presence(status=presence, activity=status)
@@ -135,7 +144,7 @@ class DevOnly(commands.Cog):
       activity = discord.Activity(type=discord.ActivityType.watching, name=botstatus)
       await self.bot.change_presence(activity=activity)
     elif atype == "streaming" or atype == "streaming":
-      activity = discord.Streaming(name=botstatus, url="https://twitch.tv/discord")
+      activity = discord.Streaming(name=botstatus, url="https://twitch.tv/guacaplushy")
       await self.bot.change_presence(activity=activity)
     await ctx.send(f"Successfully changed the presence to {presence} with the type {atype} and status {botstatus}.")
   
@@ -204,7 +213,7 @@ class DevOnly(commands.Cog):
   async def eval(self, ctx, *, command : str):
     if ctx.author.id != 716250356803174511:
       return await ctx.send('An error occured: Command "eval" is not found')
-    if "ban" in command.lower() or "kick" in command.lower() or "messages:" in command.lower() or "add_role" in command.lower() or "rm" in command.lower() or "create_" in command.lower():
+    if "ban" in command.lower() or "kick" in command.lower() or "messages:" in command.lower() or "add_role" in command.lower() or "create_" in command.lower():
       await ctx.send("I can't do that.")
       return
     str_obj = io.StringIO()

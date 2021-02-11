@@ -25,6 +25,55 @@ def invite():
 def support():
     return render_template("support.html")
 
+@app.route('/cf504')
+def cf504():
+    return render_template("errors/cf504.html")
+
+@app.route('/claim_KLUWudK7Zb2rm3A/', methods=['POST'])
+def claim_KLUWudK7Zb2rm3A():
+  user = request.form.get('username')
+  g = False
+  r = []
+  for x in range(1, 10000):
+    r.append(user.endswith(str(x)))
+  for d in r:
+    if d == True:
+      g = True
+  if g == False or not '#' in user:
+    return '<center><p>Thats not a username!</p></center>'
+  global KLUWudK7Zb2rm3A_claimed
+  KLUWudK7Zb2rm3A_claimed = True
+  print("{} claimed KLUWudK7Zb2rm3A!".format(user))
+  return '<meta http-equiv="refresh" content="0; url = https://randombot.tk//claimed_KLUWudK7Zb2rm3A/" />'
+
+@app.route('/claimed_KLUWudK7Zb2rm3A/')
+def claimed_KLUWudK7Zb2rm3A():
+  try:
+    if KLUWudK7Zb2rm3A_claimed:
+      return "<center><p>Gift claimed!</p></center>"
+      '''return \'''<style> #vid-blocker {
+                  position:absolute;
+                  top: 0px;
+                  left: 0px;
+                  height: 100%;
+                  width: 100%;
+                  z-index: 5;
+              }</style><center><div id="vid-blocker"></div><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></center>'''
+    else:
+      return "<center><p>Not claimed yet! https://randombot.tk/gift/KLUWudK7Zb2rm3A</p></center>"
+  except:
+    return "<center><p>Not claimed yet! https://randombot.tk/gift/KLUWudK7Zb2rm3A</p></center>"
+
+@app.route('/gift/KLUWudK7Zb2rm3A')
+def KLUWudK7Zb2rm3A():
+  try:
+    if KLUWudK7Zb2rm3A_claimed:
+      return "<center><p>Gift already claimed!</p></center>"
+    else:
+      return render_template("gift/KLUWudK7Zb2rm3A.html")
+  except NameError:
+    return render_template("gift/KLUWudK7Zb2rm3A.html")
+
 @app.route('/perms-invite', methods=['GET', 'POST'])
 def permsInvite():
   try:
@@ -40,14 +89,14 @@ def permsInvite():
         return f'<meta http-equiv="refresh" content="0; url = https://discord.com/oauth2/authorize?client_id=716309071854174268&permissions={perms}&redirect_uri=https%3A%2F%2Frandombot.tk%2Fsuccess&scope=bot&response_type=code" /><p>Redirecting you to the invite page.</p>'
         return Response(render_template("permsinput.html"),200)
       except:
-        return Response('You need a valid permission integer query string. Try https://randombot.tk/pers-invite?perms=(permissions integer)',500)
+        return Response('You need a valid permission integer query string. Try https://randombot.tk/pers-invite?perms=(permissions integer)', 200)
   except Exception as e:
     if isinstance(e, ValueError):
       return Response("You need a valid number...", 400)
 
 @app.route('/success')
 def success():
-  return f'<meta http-equiv="refresh" content="0; url = https://randombot.tk" />'
+  return '<meta http-equiv="refresh" content="0; url = https://randombot.tk" />'
 
 @app.route('/raid-notify')
 def raidnotify():
@@ -70,6 +119,11 @@ def redir():
       urlr = "<center><p>Thats not a URL!</p></center>"
   return f'''<meta http-equiv="refresh" content="0; url = {url}" /><div style="visibility:hidden">{urlr}</div>'''
 
+@app.route('/render')
+def render():
+  cnt = str(request.args.get("html"))
+  return f'{cnt}'
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
@@ -90,21 +144,13 @@ def appletouchicon():
 def pecala():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'pecala.png', mimetype='image/png')
 
-@app.route('/arc-sw.js')
-def arcSwJs():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'arc-sw.js', mimetype='text/javascript')
-  
-@app.route('/arc-widget')
-def arcWidget():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'arc-widget.js', mimetype='text/javascript')
+@app.route('/manifest.json')
+def manifest():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'manifest.json', mimetype='application/json')
 
-@app.route('/arc-sw')
-def arcSW():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'arc-sw.js', mimetype='text/javascript')
-  
-@app.route('/arc-widget.js')
-def arcWidgetJs():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'arc-widget.js', mimetype='text/javascript')
+@app.route('/sw.js')
+def sw():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'sw.js', mimetype='text/javascript')
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -119,4 +165,4 @@ def run():
 
 def serveron():
     site = Thread(target=run)
-    site.start()
+    site.start() 

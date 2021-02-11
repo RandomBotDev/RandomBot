@@ -6,6 +6,8 @@
 	<title>RandomBot</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="asset-manifest" href="manifest.json" />
 	<link rel="apple-touch-icon-152x152" href="/apple-touch-icon.png" />
 	<link rel="apple-touch-icon-152x152-precomposed" href="/apple-touch-icon.png" />
 	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
@@ -36,10 +38,12 @@
       y.style.display = "none";
     }
 	</script>
-	<script async src="https://arc.io/widget.min.js#P5EJZfbj">
-
-	</script>
-	<noscript>Some content might not work because your broser does not support JavaScript.</noscript>
+  <script>
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+    };
+  </script>
+  <noscript><center>Some content might not work because your browser does not support JavaScript.</center></noscript>
 </head>
 
 <body style="background-color:#0000FF;" onload="hidePermsInput()">
@@ -54,7 +58,7 @@
 	<center><a class="Buttons" href="/support" target="_blank">Support server.</a></center>
 	<hr style="height:5px; visibility:hidden;" />
 	<center>
-		<a class="Buttons" onclick="showPermsInput()" href="#">Choose invite permissions</a>
+		<a class="Buttons" onclick="showPermsInput()" href="javascript:void(0)">Choose invite permissions</a>
 		<div id="permsInput">
 			<hr style="height:2.5px; visibility:hidden;" />
 			<form action="{{ url_for("permsInvite")}}" method="post">
@@ -65,7 +69,7 @@
   </center>
 	<center>
 		<hr style="height:2.5px; visibility:hidden;" />
-		<p style="font-family: Arial; font-size: 15px; color: rgb(192, 219, 18);">The developer, GD Tom#6134 decided to make RandomBot for fun. I already
+		<p style="font-family: Arial; font-size: 15px; color: rgb(192, 219, 18);">The developer, GD Tom#0001 decided to make RandomBot for fun. I already
 			knew Python, so I googled how to make a bot. Now we are here, with it in more than 40 servers.</p>
 		<hr style="height:2.5px; visibility:hidden;" />
 		<p style="color: rgb(192, 219, 18);">More about RandomBot: It was a useless app I had in the Developer Portal, and I already knew Python. A while went by and then I just thought it would be a fun idea to make a bot. So I googled how and got to work. I scripted up a couple commands and tested them, they worked. And then I started to get the hang of it, and now I've coded more than 15 commands into it.</p>
