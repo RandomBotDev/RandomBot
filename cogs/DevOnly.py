@@ -22,17 +22,14 @@ class DevOnly(commands.Cog):
         await self.bot.close()
   
   def insert_returns(self, body):
-    # insert return stmt if the last expression is a expression statement
     if isinstance(body[-1], ast.Expr):
         body[-1] = ast.Return(body[-1].value)
         ast.fix_missing_locations(body[-1])
 
-    # for if statements, we insert returns into the body and the orelse
     if isinstance(body[-1], ast.If):
         self.insert_returns(body[-1].body)
         self.insert_returns(body[-1].orelse)
 
-    # for with blocks, again we insert returns into the body
     if isinstance(body[-1], ast.With):
         self.insert_returns(body[-1].body)
   
@@ -44,14 +41,12 @@ class DevOnly(commands.Cog):
 
     cmd = cmd.strip("` ")
 
-    # add a layer of indentation
     cmd = "\n".join(f"    {i}" for i in cmd.splitlines())
 
     if "ban" in cmd.lower() or "kick" in cmd.lower() or "messages:" in cmd.lower() or "add_role" in cmd.lower() or "create_" in cmd.lower():
       await ctx.send("I can't do that.")
       return
 
-    # wrap in async def body
     body = f"async def {fn_name}():\n{cmd}"
 
     parsed = ast.parse(body)
