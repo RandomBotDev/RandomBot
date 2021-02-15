@@ -3,6 +3,7 @@ import os
 from threading import Thread
 import requests
 from base64 import b64decode as b64d
+import json
 
 app = Flask('RandomBot')
 
@@ -123,6 +124,25 @@ def redir():
 def render():
   cnt = str(request.args.get("html"))
   return f'{cnt}'
+
+@app.route('/topgg', methods=["POST"])
+def topgg():
+  if request.headers["Authorization"] == "randombot_vote_key_7163":
+    pass
+  else:
+    return Response("", 401)
+  user = request.json
+  mainuser = json.loads(requests.get(f'https://discord.com/api/v8/users/{user["user"]}', headers = {"Authorization": f'Bot {os.getenv("auth_token")}'}).content)
+  mainbot = json.loads(requests.get(f'https://discord.com/api/v8/users/{user["bot"]}', headers = {"Authorization": f'Bot {os.getenv("auth_token")}'}).content)
+  try:
+    if user["type"] == "test":
+      voteinfo = f'{mainuser["username"]}#{mainuser["discriminator"]} just test voted for {mainbot["username"]}#{mainbot["discriminator"]}!'
+    else:
+      voteinfo = f'{mainuser["username"]}#{mainuser["discriminator"]} just voted for {mainbot["username"]}#{mainbot["discriminator"]}!'
+  except KeyError:
+    voteinfo = f'{mainuser["username"]}#{mainuser["discriminator"]} just voted for {mainbot["username"]}#{mainbot["discriminator"]}!'
+  requests.post('https://discord.com/api/webhooks/809867547029274704/1LdTWK79vyUYhIs4FZqK-Ts1pDPl8t71gu7jmNWkZv1nIRzdqCkXH4HsT0RcJSOYCIiX', json={"content": voteinfo})
+  return "Success!"
 
 @app.route('/favicon.ico')
 def favicon():

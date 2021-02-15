@@ -22,7 +22,8 @@
 	<link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="icon" href="/favicon.ico" />
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/buttons.css') }}" media="screen">
+	<!--link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/buttons.css') }}" media="screen"-->
+  <link rel="stylesheet" type="text/css" href="/static/styles/buttons.css" media="screen">
 	<script async defer>
 		function showPermsInput() {
       var x = document.getElementById("permsInput");
@@ -38,11 +39,11 @@
       y.style.display = "none";
     }
 	</script>
-  <script>
+  <!--script>
     if('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js');
     };
-  </script>
+  </script-->
   <noscript><center>Some content might not work because your browser does not support JavaScript.</center></noscript>
 </head>
 

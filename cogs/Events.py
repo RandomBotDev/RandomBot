@@ -21,6 +21,8 @@ class Events(commands.Cog):
     for x in message.mentions:
         if(x==self.bot.user):
           if message.content.split() == ['<@!716309071854174268>'] or message.content.split() == ['<@716309071854174268>']:
+            if message.author.bot:
+              return
             hexlist = '01234567890abcdef'
             colorhex = ''
             for makecolor in range(0,6):
