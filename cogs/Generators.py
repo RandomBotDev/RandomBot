@@ -45,6 +45,8 @@ class Generators(commands.Cog):
   
   @commands.command(name='binarygen', help='Generate a random binary sequence.')
   async def bgen(self, ctx, length : int):
+    if length > 220:
+      return await ctx.send("I can only generate binary sequences shorter than 220 chunks.")
     bin = '01'
     gbin = ''
     for bgener1 in range(0, length):
