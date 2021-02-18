@@ -1,4 +1,4 @@
-![](https://cdn.discordapp.com/emojis/810291025909383178.gif?v=1&size=16) RandomBot is just a simple Discord bot I decided to make on my free time. The bot is focused around random values and the commands also are focused on random values.
+![:randombot_flip:](https://cdn.discordapp.com/emojis/810291025909383178.gif?v=1&size=16) RandomBot is just a simple Discord bot I decided to make on my free time. The bot is focused around random values and the commands also are focused on random values.
 
 > What it does have: it has random value commands because that was the bot was focused around
 
