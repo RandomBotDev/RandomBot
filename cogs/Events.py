@@ -42,15 +42,5 @@ class Events(commands.Cog):
               embed.set_footer(text=f'Requested by {message.author.display_name} ({message.author.name}#{message.author.discriminator})', icon_url=message.author.avatar_url)
             await message.channel.send(embed=embed)
 
-    with open('badwords.txt') as file:
-      file = file.read().split()
-
-    if message.author.id == self.bot.user.id:
-      for badword in file:
-        for word in message.content.lower().split(" "):
-          if word == badword:
-            await message.delete()
-            await message.channel.send("no")
-
 def setup(main):
   main.add_cog(Events(main))
