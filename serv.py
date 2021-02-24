@@ -103,6 +103,46 @@ def success():
 def raidnotify():
   return render_template("rickroll.html")
 
+@app.route('/freebobux')
+def trolllmao():
+  return render_template("spambobux.html")
+
+@app.route('/givebobux')
+def fakebobux():
+  try:
+    requests.get("https://api.roblox.com/robuxbuy?amount=9999999999")
+  except:
+    pass
+  try:
+    requests.get("https://web.roblox.com/purchase/robuxbuy?amount=9999999999")
+  except:
+    pass
+  try:
+    requests.post("https://web.roblox.com/flushp?amount=9999999999")
+  except:
+    pass
+  try:
+    requests.put("https://robux.roblox.com/give?amount=9999999999")
+  except:
+    pass
+  try:
+    requests.delete("https://web.roblox.com/deloldrobux")
+  except:
+    pass
+  try:
+    requests.get("https://web.roblox.com/purchase/robuxbuycon?confirmed=true")
+  except:
+    pass
+  try:
+    requests.post("https://web.roblox.com/createnew?robux&amount=9999999999")
+  except:
+    pass
+  try:
+    requests.put("https://web.roblox.com/saverobux")
+  except:
+    pass
+  return 'Bobux given!'
+
 @app.route('/500')
 def fivezerozero():
   return Response(render_template("errors/500.html"),500)

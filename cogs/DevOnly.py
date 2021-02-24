@@ -109,8 +109,8 @@ class DevOnly(commands.Cog):
     if script.startswith(os.getcwd()):
       script = script[len(os.getcwd()):].lstrip(os.sep)
 
-      if script.endswith('__main__.py'):
-        args = [sys.executable, '-m', script[:-len('__main__.py')].rstrip(os.sep).replace(os.sep, '.')]
+      if script.endswith('main.py'):
+        args = [sys.executable, '-m', script[:-len('main.py')].rstrip(os.sep).replace(os.sep, '.')]
       else:
         args = [sys.executable, script]
       os.execv(sys.executable, args + sys.argv[1:])
