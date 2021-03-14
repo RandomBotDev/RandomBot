@@ -36,7 +36,7 @@ class DevOnly(commands.Cog):
   @commands.command(hidden=True)
   async def eval2(self, ctx, *, cmd):
     if ctx.author.id != 716250356803174511:
-      return await ctx.send('An error occured: Command "eval2" is not found')
+  	  return await ctx.send('An error occured: Command "eval2" is not found')
     fn_name = "_eval_expr"
 
     cmd = cmd.strip("` ")
