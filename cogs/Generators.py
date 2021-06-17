@@ -71,5 +71,10 @@ class Generators(commands.Cog):
     embed.set_image(url=ejected)
     await ctx.send(embed=embed)
 
+  @commands.command(name='lettergen', help='Generate a random letter.')
+  async def lgen(self, ctx):
+      chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      await ctx.send(random.choice(chars))
+
 def setup(main):
   main.add_cog(Generators(main))

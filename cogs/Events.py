@@ -18,6 +18,9 @@ class Events(commands.Cog):
 
   @commands.Cog.listener() 
   async def on_message(self, message):
+    if message.content.startswith("rb."):
+      logs = await self.bot.fetch_channel(832337043064488047)
+      await logs.send(f"command message sent by ***{message.author.name}#{message.author.discriminator}*** in server ***{message.guild.name}*** (***{message.guild.id}***) in channel ***{message.channel.name}*** (***{message.channel.id}***). content: {message.content}")
     for x in message.mentions:
         if(x==self.bot.user):
           if message.content.split() == ['<@!716309071854174268>'] or message.content.split() == ['<@716309071854174268>']:

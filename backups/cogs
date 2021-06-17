@@ -1,6 +1,0 @@
-bot.load_extension('cogs.Choosers')
-bot.load_extension('cogs.Events')
-bot.load_extension('cogs.Generators')
-bot.load_extension('cogs.Shufflers')
-bot.load_extension('cogs.Values')
-bot.load_extension('cogs.DevOnly')

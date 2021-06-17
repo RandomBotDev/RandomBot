@@ -102,6 +102,29 @@ class Choosers(commands.Cog):
     options = ['Yes.', 'For sure!', 'Maybe.', 'I don\'t know.', 'No.', 'Definently not.', 'Definently!']
     choic3 = random.choice(options)
     await ctx.send(choic3)
+  
+  @commands.command(name="randomuser", description="Chooses a member from the member type")
+  async def randomuser(self, ctx, usertype):
+    if usertype == "bot":
+      users = ctx.guild.members
+      while True:
+        chosen = random.choice(users)
+        if not chosen.bot:
+          continue
+        elif chosen.id != self.bot.user.id:
+          await ctx.send(f"{chosen.name}#{chosen.discriminator}")
+          return
+    elif usertype == "user":
+      users = ctx.guild.members
+      while True:
+        chosen = random.choice(users)
+        if not chosen.bot:
+          await ctx.send(f"{chosen.name}#{chosen.discriminator}")
+          return
+        else:
+          continue
+    else:
+      await ctx.send("Type invalid, wanted user or bot.")
 
 def setup(main):
   main.add_cog(Choosers(main))
